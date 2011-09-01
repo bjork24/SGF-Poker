@@ -19,7 +19,8 @@ class ResultsController < ApplicationController
         else
           "@#{player.twitter}: Guess what?! @#{winner_twitter} totally whipped your ass at poker tonight!"
         end
-        Twitter.update(tweet)
+        @twitter = Twitter::Client.new
+        @twitter.update(tweet)
       end
       
       placed = i+1
