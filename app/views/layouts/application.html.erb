@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SGF Poker - It's the tits!</title>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,800' rel='stylesheet' type='text/css'>
+  <%= stylesheet_link_tag :all %>  
+  <%= javascript_include_tag :defaults %>
+  <%= yield :javascript %>
+  <%= csrf_meta_tag %>
+</head>
+<body id="<%= "#{params[:controller].parameterize}-#{params[:action].parameterize}" %>">
+  
+  <% if notice.present? || alert.present? %>
+  <div id="message-bar" class="<%= notice.present? ? 'notice' : 'alert' %>">
+    <%= notice if notice.present? %>
+    <%= alert if alert.present? %>
+  </div>
+  <% end %>
+  
+  <div id="container">
+    
+    <%= render :partial => 'layouts/header' %>
+    
+    <div id="content" class="clearfix">
+      
+      <div id="main">
+        <%= yield %>
+      </div>
+      <div id="sidebar">
+        
+        <%= render :partial => 'layouts/quick_stats' %>
+        <%= render :partial => 'layouts/recent_comments' %>
+        
+        <%= yield :sidebar %>
+        
+        <% if current_player.admin && content_for?(:admin_sidebar) %>
+          <div id="admin-module" class="module">
+            <h3>Admin Links</h3>
+            <%= yield :admin_sidebar %>
+          </div>
+        <% end %>
+        
+      </div>
+    
+  </div>
+
+</body>
+</html>

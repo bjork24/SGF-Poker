@@ -1,0 +1,53 @@
+<script type="text/javascript">
+$(document).ready(function() {
+
+  var graph1 = new Highcharts.Chart({
+    chart: {
+      renderTo: 'graph1',
+      type: 'line',
+      zoomType: 'x'
+    },
+    title: { text: '' },
+    xAxis: {
+      title: { text: 'Games Played' }
+    },
+    yAxis: {   
+      title: { text: 'Amount Won' }
+    },
+    legend: { enabled: false },
+    tooltip: {
+      formatter: function() {
+        return '<b>Game #'+ this.x +':</b> $'+ this.y;
+      }
+    },
+    series: [{
+      data: [<%= @winnings.join(',') %>]        
+    }]
+  });
+  
+  var graph2 = new Highcharts.Chart({
+    chart: {
+      renderTo: 'graph2',
+      type: 'line',
+      zoomType: 'x'
+    },
+    title: { text: '' },
+    xAxis: {
+      title: { text: 'Games Played' }
+    },
+    yAxis: {   
+      title: { text: 'Profit' }
+    },
+    legend: { enabled: false },
+    tooltip: {
+      formatter: function() {
+        return '<b>Game #'+ this.x +':</b> $'+ this.y;
+      }
+    },
+    series: [{
+      data: [<%= @profit.join(',') %>]        
+    }]
+  });
+
+});
+</script>

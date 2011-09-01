@@ -1,0 +1,90 @@
+<%= render :partial => "chart_js" %>
+
+<div class="section" id="profile-page">
+
+  <div id="profile-header" class="clearfix">
+    <div class="floatL avatar"><%= image_tag avatar(@player), :id => "avatar" %></div>
+    <div class="floatL info"> 
+      <h3><%= @player.twitter.present? ? "@#{@player.twitter}" : "Too good for this app" %></h3>
+      <h2><%= @player.name %></h2>
+    </div>
+  </div>
+  
+  <% if @player.games.count > 0 %>
+  
+    <h3>Stats:</h3>
+  
+    <ul id="player-stats">
+      <li><strong>Games Played:</strong> <%= games_played(@player) %> / <%= total_games %> (<%= games_played(@player,1) %>)</li>
+      <li><strong>First Place:</strong> <%= first_place(@player) %> (<%= first_place(@player,1) %>)</li>
+      <li><strong>Money Back:</strong> <%= money_back(@player) %> (<%= money_back(@player,1) %>)</li>
+      <li><strong>Total Wagered:</strong> <%= amount_wagered(@player) %></li>
+      <li><strong>Total Won:</strong> <%= amount_won(@player) %> (<span class="<%= ((amount_won(@player,:per_game_raw) > 0) && 'positive') || 'negative' %>"><%= amount_won(@player,:per_game) %></span> per game)</li>
+      <li><strong>Total Profit:</strong> <span class="<%= ((amount_profited(@player,1) > 0) && 'positive') || 'negative' %>"><%= amount_profited(@player) %></span> (<span class="<%= ((amount_profited(@player,:per_game_raw) > 0) && 'positive') || 'negative' %>"><%= amount_profited(@player,:per_game) %></span> per game)</li>
+      <li><strong>First Game:</strong> <%= first_game(@player,:date,"%B %e, %Y") %> (<%= first_game(@player,:placed) %> of <%= first_game(@player,:player_count) %>)</li>
+      <li><strong>Last Game:</strong> <%= last_game(@player,:date,"%B %e, %Y") %> (<%= last_game(@player,:placed) %> of <%= last_game(@player,:player_count) %>)</li>
+      <li><strong>Last Win:</strong> <%= last_win(@player,:date,"%B %e, %Y") %> <%= last_win(@player,:time_ago) %></li>
+    </ul>
+
+    <h2>Graphs</h2>
+    <h3>Total Winnings</h3>
+    <div id="graph1" style="height: 400px;"></div>
+    <h3>Total Profit</h3>
+    <div id="graph2" style="height: 400px;"></div>
+
+    <div id="game-index-header">
+      <h2>Game Log</h2>
+      <ul class="clearfix">
+        <% @player.games.years.each do |year| %>
+        <li><a href="#<%=year%>"><%=year%></a></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <% @player.games.years.each do |year| %>
+      <a name="<%=year%>"></a>
+      <h3><%= year %></h3>
+      <% @player.games.for_year(year).each do |game| %>
+        <% winner = game.players.order('results.placed ASC').first %>
+        <% result = game.results.find_by_player_id(@player) %>
+        <%= link_to game, :class => "game-log #{'winner' if winner == @player}" do %>
+          <div class="top clearfix">
+            <div class="game">Game #<%= game.game_number %></div>
+            <div class="winner"><strong>1st:</strong><%= winner.name %></div>
+            <div class="date"><%= game.date.strftime("%B %e, %Y") %></div>
+          </div>
+          <div class="sub clearfix">
+            <div class="players"><strong>Placed:</strong><%= result.placed %> of <%= game.players.count %></div>
+            <div class="wager"><strong>Won:</strong><%= number_to_currency( result.won ) %></div>
+            <% if game.location %><div class="location"><strong>Location:</strong><%= game.location.name %></div><% end %>
+            <div class="comments"><strong>Comments:</strong><%= game.comments.count %></div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+    
+  <% end %>
+
+  <% if current_player.admin %>
+  <pre style="background: #CCC; padding: 10px !important; overflow: hidden;">
+    Player.create(
+      :name => "<%= @player.name %>",
+      :twitter => "<%= @player.twitter %>",
+      :avatar => "<%= @player.avatar %>",
+      :admin => <%= @player.admin %>,
+      :active => <%= @player.active %>,
+      :provider => "<%= @player.provider %>",
+      :uid => "<%= @player.uid %>"
+      )</pre>
+  <% end %>
+
+</div>
+
+<% content_for :admin_sidebar do %>
+  <%= link_to 'Edit This Player', edit_player_path(@player) %>
+  <%= link_to 'Delete This Player', @player, :confirm => "Are you sure?", :method => :delete %>
+<% end %>
+
+<% content_for :javascript do %>
+  <script src="/javascripts/charts/highcharts.js" type="text/javascript"></script>
+<% end %>

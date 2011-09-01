@@ -1,0 +1,25 @@
+<%= form_for(@location) do |f| %>
+
+  <% if @location.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@location.errors.count, "error") %> prohibited this location from being saved:</h2>
+
+      <ul>
+      <% @location.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field clearfix">
+    <%= f.label :name %>
+    <span class="input"><%= f.text_field :name %></span>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit "Save Location", { :class => "submit-button" } %>
+    <%= link_to "Cancel", locations_path, :class => "cancel-button" %>
+  </div>
+  
+<% end %>

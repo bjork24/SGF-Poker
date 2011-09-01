@@ -1,0 +1,44 @@
+<%= form_for(@game) do |f| %>
+  
+  <%= f.hidden_field :game_number %>
+  
+  <div class="field clearfix">
+    <%= f.label :location_id %>
+    <span class="input"><%= f.collection_select(:location_id, Location.all, :id, :name) %></span>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :wager %>
+    <span class="input">$ <%= f.text_field :wager, :value => "#{ @game.wager ? @game.wager : Game.last.wager }" %></span>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :date %>
+    <span class="input"><%= f.date_select :date %></span>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :note %>
+    <span class="input"><%= f.text_area :note %></span>
+  </div>
+  
+  <h2>Players</h2>
+  <% @players.each do |player| %>
+    <%= link_to "", :class => "player-stub form clearfix #{ 'selected' if @game.player_ids.include?(player.id) }" do %>
+      <%= check_box_tag "game[player_ids][]", player.id, @game.player_ids.include?(player.id)  %>
+      <%= image_tag avatar(player) %>
+      <div class="info">
+        <h3><%= player.name %> <small><%= "@#{player.twitter}" if not player.twitter.blank? %></small></h3>
+        <ul class="clearfix">
+          <li><strong>Played:</strong> <%= player.games_played %></li>
+          <li><strong>First Place:</strong> <%= first_place(player) %></li>
+          <li><strong>Won:</strong> <%= amount_won(player) %></li>
+          <li><strong>Profit:</strong> <span class="<%= ((amount_profited(player,1) > 0) && 'positive') || 'negative' %>"><%= amount_profited(player) %></span></li>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+  
+  <div class="form-actions">
+    <%= f.submit "Rank Game", { :class => "submit-button" } %>
+    <%= link_to "Cancel", games_path, :class => "cancel-button" %>
+  </div>
+  
+<% end %>

@@ -1,0 +1,13 @@
+<%= form_for([@game,@game.comments.new]) do |c| %>
+
+  <%= c.hidden_field :game_id %>
+  <%= hidden_field_tag "comment[player_id]", current_player.id %>
+  
+  <h3>Leave a Comment</h3>
+  <%= c.text_area :text, :id => "comment-input" %>  
+  
+  <div id="comment-buttons" class="form-actions">
+    <%= c.submit :class => "submit-button" %>
+  </div>
+  
+<% end %>

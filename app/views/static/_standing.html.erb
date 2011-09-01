@@ -1,0 +1,18 @@
+<h3><%= title %></h3>
+<ol>
+  <% players.each_with_index do |player, i| %>
+  <li class="mini-player-stub clearfix">
+    <%= link_to player do %>
+      <strong><%= i+1 %>.</strong>
+      <%= image_tag avatar(player) %>
+      <h4><%= player.name %></h4>
+      <%
+      if span_color
+        span_class = (player.span && 'positive') || 'negative'
+      end
+      %>
+      <span class="<%= span_class if span_color %>"><%= player.standing %></span>
+    <% end %>
+  </li>
+  <% end %>
+</ol>

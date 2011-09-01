@@ -1,0 +1,51 @@
+<div class="section rank-form" id="game-form">
+
+  <h2>Rank Players</h2>
+
+  <script>
+  	$(function() {
+  		$( "#sortable" ).sortable();
+  		$( "#sortable" ).disableSelection();
+  	});
+  </script>
+
+  <% form_tag('/results/rank_create') do |r| %>
+  
+    <%= hidden_field_tag "game[id]", @game.id %>
+    
+    <ul id="sortable">
+    <% for player in @players %>
+      <li class="player-stub clearfix">
+        <%= hidden_field_tag 'game[players][]', player.id %>
+        <%= image_tag avatar(player) %>
+        <div class="info">
+          <h3><%= player.name %> <small><%= "@#{player.twitter}" if not player.twitter.blank? %></small></h3>
+          <ul class="clearfix">
+            <li><strong>Played:</strong> <%= games_played(player) %></li>
+            <li><strong>First Place:</strong> <%= first_place(player) %></li>
+            <li><strong>Won:</strong> <%= amount_won(player) %></li>
+            <li><strong>Profit:</strong> <span class="<%= ((amount_profited(player,1) > 0) && 'positive') || 'negative' %>"><%= amount_profited(player) %></span></li>
+          </ul>
+        </div>
+      </lu>
+    <% end %>
+    </ul>
+    
+    <div class="field clearfix">
+      <label>Did 2nd place win some money?</label>
+      <span class="input"><%= check_box_tag 'game[second_wins_money]' %> Yep!</span>
+    </div>
+    
+    <div class="field clearfix">
+      <label>How much did 2nd place win?</label>
+      <span class="input">$<%= text_field_tag 'game[second_money_amount]', @game.wager, :style => "width: 40px;" %></span>
+    </div>
+    
+    <div class="form-actions">
+      <%= submit_tag "Save this game", :class => "submit-button" %>
+      <%= link_to 'Cancel', @game, :confirm => 'Are you sure? This will delete the game entirely.', :method => :delete, :class => "cancel-button" %>
+    </div>
+    
+  <% end %>
+
+</div>

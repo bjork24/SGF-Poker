@@ -1,0 +1,44 @@
+<div class="section" id="standings">
+  
+  <h2>Standings</h2>
+  
+  <% @players_sort_by_games_played.each do |player| player[:standing] = "#{games_played(player)} of #{total_games} (#{games_played(player,1)})" end %>
+  <%= render :partial => "standing", :locals => { :title => "Games Played", :players => @players_sort_by_games_played, :span_color => nil } %>
+  
+  <% @players_sort_by_money_won.each do |player| player[:standing] = amount_won(player) end %>
+  <%= render :partial => "standing", :locals => { :title => "Total Amount Won", :players => @players_sort_by_money_won, :span_color => nil } %>
+  
+  <% @players_sort_by_average_money_won.each do |player| player[:standing] = amount_won(player, :per_game) end %>
+  <%= render :partial => "standing", :locals => { :title => "Average Won Per Game", :players => @players_sort_by_average_money_won, :span_color => nil } %>
+  
+  <%
+  @players_sort_by_profit.each do |player|
+    player[:standing] = amount_profited(player)
+    player[:span] = amount_profited(player,1) > 0
+  end
+  %>
+  <%= render :partial => "standing", :locals => { :title => "Total Amount Profited", :players => @players_sort_by_profit, :span_color => true } %>
+  
+  <%
+  @players_sort_by_average_profit.each do |player|
+    player[:standing] = amount_profited(player, :per_game)
+    player[:span] = amount_profited(player,:per_game_raw) > 0
+  end
+  %>
+  <%= render :partial => "standing", :locals => { :title => "Average Profit Per Game", :players => @players_sort_by_average_profit, :span_color => true } %>
+  
+  <% @players_sort_by_first_place.each do |player| player[:standing] = first_place(player) end %>
+  <%= render :partial => "standing", :locals => { :title => "Games Won", :players => @players_sort_by_first_place, :span_color => nil } %>
+  
+  <% @players_sort_by_first_place_pct.each do |player| player[:standing] = first_place(player,1) end %>
+  <%= render :partial => "standing", :locals => { :title => "Games Won Percent", :players => @players_sort_by_first_place_pct, :span_color => nil } %>
+  
+  <% @players_sort_by_money_back.each do |player| player[:standing] = money_back(player) end %>
+  <%= render :partial => "standing", :locals => { :title => "Won Money Back", :players => @players_sort_by_money_back, :span_color => nil } %>
+  
+  <% @players_sort_by_money_back_pct.each do |player| player[:standing] = money_back(player,1) end %>
+  <%= render :partial => "standing", :locals => { :title => "Won Money Back Percent", :players => @players_sort_by_money_back_pct, :span_color => nil } %>
+  
+  
+  
+</div>

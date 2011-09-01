@@ -1,0 +1,28 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: 2011-07-25 22:50:15
+
+two:
+  date: 2011-07-25 22:50:15
+
+
+
+
+
+
+# == Schema Information
+#
+# Table name: games
+#
+#  id          :integer(4)      not null, primary key
+#  note        :text
+#  date        :datetime
+#  location_id :integer(4)
+#  wager       :integer(4)
+#  game_number :integer(4)
+#  ranked      :boolean(1)      default(FALSE)
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+

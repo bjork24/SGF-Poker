@@ -1,0 +1,24 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  game_id: 1
+  player_id: 1
+  text: MyString
+
+two:
+  game_id: 1
+  player_id: 1
+  text: MyString
+
+# == Schema Information
+#
+# Table name: comments
+#
+#  id         :integer(4)      not null, primary key
+#  game_id    :integer(4)
+#  player_id  :integer(4)
+#  text       :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+

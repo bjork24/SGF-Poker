@@ -1,0 +1,16 @@
+<div class="section" id="locations-index">
+
+  <h2>Locations</h2>
+
+  <% @locations.each do |location| %>
+    <%= link_to location, :class => "location-log" do %>
+      <h4><%= location.name %></h4>
+      <div class="info"><strong>Games played:</strong> <%= location.games.size %></div>
+    <% end %>
+  <% end %>
+  
+  <div class="actions">
+    <%= link_to 'New Location', new_location_path, :class => "submit-button" %>
+  </div>
+
+</div>

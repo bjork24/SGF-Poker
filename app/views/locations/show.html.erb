@@ -1,0 +1,38 @@
+<div class="section" id="location-show">
+  
+  <div id="game-index-header">
+    <h2><%= @location.name %></h2>
+    <ul class="clearfix">
+      <% @location.games.years.each do |year| %>
+      <li><a href="#<%=year%>"><%=year%></a></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% @location.games.years.each do |year| %>
+    <a name="<%=year%>"></a>
+    <h3><%= year %></h3>
+    <% @location.games.ranked.for_year(year).each do |game| %>
+      <% winner = game.players.order('results.placed ASC').first %>
+      <%= link_to game, :class => "game-log #{'winner' if winner == current_player}" do %>
+        <div class="top clearfix">
+          <div class="game">Game #<%= game.game_number %></div>
+          <div class="winner"><strong>1st:</strong><%= winner.name %></div>
+          <div class="date"><%= game.date.strftime("%B %e, %Y") %></div>
+        </div>
+        <div class="sub clearfix">
+          <div class="players"><strong>Players:</strong><%= game.players.count %></div>
+          <div class="wager"><strong>Wager:</strong><%= number_to_currency(game.wager) %></div>
+          <% if game.location %><div class="location"><strong>Location:</strong><%= game.location.name %></div><% end %>
+          <div class="comments"><strong>Comments:</strong><%= game.comments.count %></div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+</div>
+
+<% content_for :admin_sidebar do %>
+  <%= link_to 'Edit This Location', edit_location_path(@location) %>
+  <%= link_to 'Delete This Location', @location, :confirm => "Are you sure?", :method => :delete %>
+<% end %>

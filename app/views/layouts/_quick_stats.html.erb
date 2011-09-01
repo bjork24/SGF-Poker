@@ -1,0 +1,14 @@
+<div id="user-module" class="module">
+  <h3><%= current_player.name %></h3>
+  <em>@<%= current_player.twitter %></em>
+  <%= image_tag current_player.avatar, :id => "avatar" %>
+  <h4>Quick Stats</h4>
+  <ul>
+    <li><strong>Games Played:</strong> <%= games_played(current_player) %> / <%= total_games %> (<%= games_played(current_player,1) %>)</li>
+    <li><strong>First Place:</strong> <%= first_place(current_player) %> (<%= first_place(current_player,1) %>)</li>
+    <li><strong>Money Back:</strong> <%= money_back(current_player) %> (<%= money_back(current_player,1) %>)</li>
+    <li><strong>Total Wagered:</strong> <%= amount_wagered(current_player) %></li>
+    <li><strong>Total Won:</strong> <%= amount_won(current_player) %></li>
+    <li><strong>Total Profit:</strong> <span class="<%= ((amount_profited(current_player,1) > 0) && 'positive') || 'negative' %>"><%= amount_profited(current_player) %></span></li>
+  </ul>
+</div>

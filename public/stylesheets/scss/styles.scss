@@ -1,0 +1,256 @@
+@import "mixins";
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0;}body{line-height:1;}ol,ul{list-style:none;}blockquote,q{quotes:none;}blockquote:before,blockquote:after,q:before,q:after{content:none;}table{border-collapse:collapse;border-spacing:0;}h1,h2,h3,h4,h5,h6{font-weight:900;line-height:100%;}h1{font-size:400%;}h2{font-size:300%;}h3{font-size:200%;}h4{font-size:150%;}h5{font-size:125%;}h6{font-size:100%;}strong{font-weight:900;}
+
+.clearfix:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; } * html .clearfix { zoom: 1; } *:first-child+html .clearfix { zoom: 1; }
+
+.floatL { float: left; }
+.floatR { float: right; }
+.sprite { overflow: hidden; background: transparent url('/images/sprite.png') no-repeat 0 0; text-indent: -9999px; display: block; }
+
+html { font: normal 400 14px/16px 'Open Sans',Helvetica,Arial,sans-serif; color: #222; background: #333 url('/images/background.png') repeat 0 0; }
+body { position: relative; width: 100%; height: 100%; }
+
+#message-bar { 
+  padding: 10px 40px 15px; margin: 0 -25px; border-bottom: 1px solid #999; @include inset-box-shadow(0,-5px,10px,0,#444);
+  &.notice { @include gradient(lighten($green,30%),$green); }
+  &.alert { @include gradient(lighten($red,30%),$red); }
+}
+
+#container { width: 900px; margin: 0 auto; }
+
+#sign-in { 
+  display: block; position: relative; margin: 200px auto 50px; width: 100px; height: 100px; border: 1px solid #999; @include box-shadow(0,0,15px,0,#111); @include gradient(#FFF,#BBB); @include rounded-corners(5px);
+  span { position: absolute; top: 50%; left: 50%; margin: -28px 0 0 -28px; width: 56px; height: 56px; display: block; overflow: hidden; background-position: -163px -112px; }
+  &:hover { @include gradient(#333,#111); border: 1px solid #444; }
+  &:hover span { background-position: -231px -112px; }
+}
+#sign-in-message { width: 150px; margin: 0 auto; padding: 20px 25px; font-size: 14px; line-height: 18px; @include box-shadow(0,0,15px,0,#111); @include gradient(#FFF,#BBB); @include rounded-corners(5px); display: none; }
+
+#header {
+	h1 { width: 450px; height: 110px; position: relative; margin: 20px 0 25px; }
+	h1 a { display: block; position: absolute; top: 0; left: 110px; width: 340px; height: 53px; }
+	ul {
+	  @include box-shadow(3px,3px,9px,0,#111); @include gradient(#333,#000); margin: -80px 0 0 30px; height: 43px; border: 1px solid #333; border-top-color: #555;
+    li {
+      float: right; position: relative;
+      a:before { content: ""; display: block; background: transparent url('/images/sprite.png') no-repeat 0 0; height: 23px; }
+      a { position: relative; display: block; border-left: 1px solid #333; padding: 10px; color: #000; text-decoration: none; }
+      &:hover a { @include gradient(#444,#111); }
+      a span { @include rounded-corners(5px); position: absolute; display: block; text-align: center; width: 100px; padding: 10px 0; background: rgba(255,255,255,0.8); top: -45px; left: 50%; margin-left: -50px; display: none; }
+      &:hover a span { display: block; }
+    }
+    #last-game-winner { float: left; color: $green; margin: 13px 0 0 100px; }
+    #last-game-winner strong { color: #FFF; }
+    #new-game a:before { background-position: -69px -114px; width: 24px; }
+    #new-game:hover a:before { background-position: -69px -142px; }
+    #players a:before { background-position: -35px -114px; width: 27px; }
+    #players:hover a:before { background-position: -35px -142px; }
+    #standings a:before { background-position: 0 -114px; width: 28px; }
+    #standings:hover a:before { background-position: 0 -142px; }
+    #locations a:before { background-position: -2px -174px; width: 28px; }
+    #locations:hover a:before { background-position: -2px -202px; }
+    #profile a:before { background-position: -99px -114px; width: 28px; }
+    #profile:hover a:before { background-position: -99px -142px; }
+    #logout a:before { background-position: -133px -114px; width: 20px; }
+    #logout:hover a:before { background-position: -133px -142px; }
+  }
+}
+
+#content {
+  margin-bottom: 50px;
+  #main {
+    float: left; width: 580px;
+    .section {
+      background: #FFF; padding: 20px 25px; margin: 15px 0;
+      h2 { color: $red; margin: 20px 0; }
+      h2:first-child { margin-top: 0; }
+      h3 { color: $green; margin: 15px 0; }
+    }
+  }
+  #sidebar {
+    float: right; width: 300px;
+    .module { @include gradient(#111,#000); border: 1px solid #777; margin: 15px 0; padding: 17px 20px; color: #CCC; }
+  }
+}
+
+#game-index {
+  h3 { margin: 25px 0 !important; }
+}
+
+#game-index-header {
+  position: relative; margin-bottom: -15px;
+	ul { 
+	  position: absolute; bottom: 0; right: 0;
+    li { float: left; overflow: hidden; }
+    li a { text-decoration: none; color: $blue; border-left: 1px solid #CCC; padding: 0 5px; }
+    li:first-child a { border: 0; }
+  }
+}
+
+.game-log { 
+  display: block; overflow: hidden; @include rounded-corners(5px); margin: 10px 0; border: 1px solid #777; border-width: 0 1px 1px 0; text-decoration: none; color: #222;
+	&:hover { @include box-shadow(0,0,5px,2px,$red); }
+	.top {
+    @include gradient(#555,#333); padding: 7px; border-bottom: 1px solid #222; color: #FFF;
+    .game { float: left; font-weight: 800; text-transform: uppercase; }
+    .winner { float: left; font-weight: 600; color: $green; margin-left: 20px; }
+    .winner strong { margin-right: 4px; color: #CCC; }
+    .date { float: right; }
+  }
+	.sub {
+	  @include gradient(lighten($blue,20%),lighten($blue,10%)); padding: 7px; @include inset-box-shadow(0,4px,5px,-2px,#555); font-size: 12px;
+    strong { margin-right: 5px; }
+    .players { float: left; }
+    .wager { float: left; margin-left: 15px; }
+    .location { float: left; margin-left: 15px; }
+    .comments { float: right; }
+  }
+	&.winner .sub { @include gradient(lighten($green,20%),lighten($green,10%)); }
+}
+
+#game-page {
+  #game-data {
+    strong { margin-left: 15px; }
+    strong:first-child { margin-left: 0; }
+    #note { display: block; padding: 12px 15px; margin-top: 15px; line-height: 18px; border: 1px solid #CC0; border-top-color: #EE0; @include rounded-corners(5px); @include gradient(lighten(#FF0,40%),#FF0); }
+  }
+  #ranking li {
+    margin: 10px 0;
+    img { float: left; border: 1px solid #555; }
+    .meta {
+      float: left; margin: -4px 0 0 10px;
+      h4 { margin-bottom: 3px; }
+      h4 a { color: $blue; text-decoration: none; }
+      h4 a:hover { text-decoration: underline; }
+      p strong { color: $green; margin-left: 10px; }
+      p strong:first-child { margin-left: 0; }
+    }
+  }
+  .comment {
+    margin: 15px 0;
+    img { float: right; width: 35px; border: 1px solid #555; }
+    p { float: left; background: #DDD; width: 460px; padding: 10px 12px; @include rounded-corners(5px); overflow: hidden; line-height: 18px; }
+    p span { display: block; background: #AAA; margin: 10px -12px -10px; padding: 2px 6px; font-size: 11px; text-align: right; }
+    p span a { color: #000; text-decoration: none; font-weight: 600; }
+  }
+  #comment-input { width: 100%; height: 100px; }
+  #comment-buttons { margin: 15px 0; }
+}
+
+#profile-page {
+  #profile-header {
+    margin-bottom: 20px;
+  	.avatar img { width: 54px; border: 1px solid #222; }
+  	.info { margin: -3px 0 0 10px; }
+  	.info h2 { margin: 0 0 0 0 !important; padding: 0; text-transform: uppercase; letter-spacing: -2px; }
+  	.info h3 { font-size: 13px; font-weight: 600; margin: 0 !important; padding-left: 2px; }
+  }
+  #player-stats { margin: 20px 0 20px; }
+  #player-stats li { margin: 10px 0; }
+  #player-stats li strong { width: 150px; display: inline-block; }
+  h3 { margin: 25px 0 !important; }
+}
+
+.positive { color: $green; }
+.negative { color: $red; }
+
+#player-index .desc { color: #555; margin: 15px 0; }
+
+.player-stub {
+  background: pink; display: block; text-decoration: none; margin: 10px 0; padding: 8px 10px; color: #000; @include rounded-corners(5px); overflow: hidden; @include gradient(#DDD,#BBB); @include inset-box-shadow(0,0,10px,0,#555);
+  &.you { @include gradient(#FFA,#EE0); }
+  &:hover { @include gradient(lighten($green,30%),$green); @include inset-box-shadow(0,0,10px,0,#222); }
+  &.form {
+    &:hover { @include gradient(#CCC,#AAA); @include inset-box-shadow(0,0,10px,0,#222); }
+    &.selected { @include gradient(lighten($green,30%),$green); @include inset-box-shadow(0,0,10px,0,#222); }
+  }
+	img { float: left; border: 1px solid #999; }
+	input[type="checkbox"] { display: none; }
+	.info {
+	  float: left; margin-left: 10px; 
+		h3 { margin: 0 !important; font-size: 24px; color: $red !important; }
+		h3 small { font-size: 12px; font-weight: 400; color: #000; margin-left: 5px; }
+    ul { font-size: 12px; margin-top: 3px; }
+  	ul li { float: left; margin-left: 12px; }
+    ul li:first-child { margin-left: 0; }
+    .positive { color: darken($green, 20%); }
+  }
+}
+
+form {
+  .field {
+    @include gradient(#FFF,#EEE); border-bottom: 1px solid #AAA; padding: 10px 5px;
+    label { float: left; font-weight: 800; margin-top: 3px; }
+    label:after { content: ":"; }
+    .input { float: right; }
+    &:hover { @include gradient(#DDD,#CCC); }
+  }
+  .form-actions {
+    margin-top: 15px;
+    .submit-button { border: 0; font-size: 18px; padding: 8px 12px; @include rounded-corners(5px); @include gradient(lighten($green,30%),$green); @include inset-box-shadow(0,0,10px,0,#222); }
+    .cancel-button { display: inline-block; text-decoration: none; color: #222; font-size: 18px; padding: 8px 12px; @include rounded-corners(5px); @include gradient(lighten($red,30%),$red); @include inset-box-shadow(0,0,10px,0,#222); }
+  }
+}
+
+#user-module {
+  position: relative;
+	img { border: 1px solid #777; width: 48px; height: 48px; position: absolute; top: 20px; right: 20px; }
+	h3 { color: $red; font-size: 24px; font-weight: 800; margin-bottom: 5px; }
+	em { color: $blue; }
+	h4 { color: $green; font-size: 18px; margin: 20px 0 10px; }
+	ul li { margin: 10px 0; }
+	ul li strong { font-weight: 800; }
+	ul li:last-child { margin-bottom: 0; }
+}
+
+#game-form {
+  #game_wager { width: 50px; }
+  #game_note { width: 400px; height: 100px; }
+}
+
+#admin-module {
+  h3 { color: $red; font-size: 24px; font-weight: 800; margin-bottom: 15px; }
+  a { text-decoration: none; display: block; background: #FFF; padding: 3px 5px; color: #000; margin-top: 5px; text-transform: uppercase; font-size: 12px; font-weight: 900; }
+  a:first-child { margin: 0; }
+  a:hover { background: $red; }
+}
+
+#recent-comment-module {
+  h3 { color: $red; font-size: 24px; font-weight: 800; margin-bottom: 15px; }
+  ul {
+    li {
+      margin: 15px 0;
+      &:last-child { margin-bottom: 0; }
+      a { text-decoration: none; }
+      strong { padding: 8px 10px; display: block; font-weight: 400; font-size: 12px; line-height: 16px; color: #000; @include gradient(#FFF,#DDD); @include rounded-corners(5px); }
+      span { display: block; text-align: right; color: #FFF; font-size: 12px; margin-top: 5px; }
+    }
+  }
+}
+
+#standings {
+  ol {}
+  .mini-player-stub {
+    @include gradient(#FFF,#EEE); height: 25px; overflow: hidden; border-bottom: 1px solid #DDD;
+    &:hover { @include gradient(#DDD,#CCC); }
+    a { text-decoration: none; color: #222; }
+    strong { float: left; font-size: 18px; width: 35px; text-align: right; margin: 4px 5px 0 0; color: #888; }
+    img { width: 25px; height: 25px; float: left; }
+    h4 { margin: 5px 0 0 5px; float: left; font-size: 16px; color: $red; }
+    span { display: block; float: right; margin: 6px 8px 0 0; }
+  }
+}
+
+#locations-index {
+  .location-log {
+    text-decoration: none; color: #222; display: block; margin: 10px 0; padding: 10px 15px; @include rounded-corners(5px); @include gradient(#EEE,#DDD); @include inset-box-shadow(0,0,10px,0,#222);
+    &:hover { @include gradient(lighten($red,50%),lighten($red,20%)); }
+    h3 {}
+    .info { margin-top: 3px; }
+  }
+  .actions {
+    margin: 30px 0 10px;
+    .submit-button { color: #333; text-decoration: none; border: 0; font-size: 18px; padding: 8px 12px; @include rounded-corners(5px); @include gradient(lighten($blue,30%),$blue); @include inset-box-shadow(0,0,10px,0,#222); }
+  }
+}

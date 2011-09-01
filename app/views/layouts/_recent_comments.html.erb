@@ -1,0 +1,13 @@
+<div id="recent-comment-module" class="module">
+  <h3>Recent Comments</h3>
+  <ul>
+    <% for comment in Comment.recent do %>
+    <li>
+      <%= link_to comment.game do %>
+        <strong><%= comment.text %></strong>
+        <span>- <%= comment.player.name %> on Game #<%= comment.game.game_number %></span>
+      <% end %>
+    </li>
+    <% end %>
+  </ul>
+</div>

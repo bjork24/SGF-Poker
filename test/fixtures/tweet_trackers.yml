@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  tid: MyString
+
+two:
+  tid: MyString
+
+
+
+
+
+# == Schema Information
+#
+# Table name: tweet_trackers
+#
+#  tid :string(255)
+#
+

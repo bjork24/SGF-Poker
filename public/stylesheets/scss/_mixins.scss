@@ -1,0 +1,28 @@
+$red: #E50000;
+$green: #18CC00;
+$blue: #00A7f5;
+
+@mixin rounded-corners($radius) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+}
+
+@mixin gradient($top,$bottom) {
+  background-image: -moz-linear-gradient(top, $top, $bottom);
+  background-image: -webkit-gradient(linear, center top, center bottom, from($top), to($bottom));
+  background-image: -o-linear-gradient(top, $top, $bottom);
+  background-image: linear-gradient(top, $top, $bottom);
+}
+
+@mixin box-shadow($left,$top,$blur,$spread,$color) {
+  -moz-box-shadow: $left $top $blur $spread $color;
+  -webkit-box-shadow: $left $top $blur $spread $color;
+  box-shadow: $left $top $blur $spread $color;
+}
+
+@mixin inset-box-shadow($left,$top,$blur,$spread,$color) {
+  -moz-box-shadow: inset $left $top $blur $spread $color;
+  -webkit-box-shadow: inset $left $top $blur $spread $color;
+  box-shadow: inset $left $top $blur $spread $color;
+}

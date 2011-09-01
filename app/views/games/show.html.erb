@@ -1,0 +1,52 @@
+<div class="section" id="game-page">
+
+  <h2>Game #<%= @game.game_number %></h2>
+
+  <p id="game-data">
+    <strong>Date:</strong> <%= @game.date.strftime("%B %e, %Y") %>
+    <strong>Location:</strong> <%= @game.location ? @game.location.name : "???" %>
+    <strong>Wager:</strong> <%= number_to_currency(@game.wager) %>
+    <% if @game.note.present? %>
+      <span id="note"><strong>Note:</strong> <%= @game.note %></span>
+    <% end %>
+  </p>
+
+  <h3>Results</h3>
+  <ol id="ranking">
+  <% @players.each_with_index do |player,i| %>
+    <% result = Result.find_by_game_id_and_player_id(@game,player) %>
+    <li class="clearfix">
+      <%= link_to (image_tag avatar(player)), player %>
+      <div class="meta">
+        <h4><%= link_to player.name, player %></h4>
+        <p>
+          <strong>Won:</strong> <%= number_to_currency(result.won) %>
+          <strong>Profit:</strong> <%= number_to_currency((result.won-@game.wager)) %>
+        </p>
+      </div>
+    </li>
+  <% end %>
+  </ol>
+
+  <h3>Comments</h3>
+
+  <% for comment in @comments %>
+    <div class="comment clearfix">
+      <p>
+        <%= comment.text %>
+        <span>By <%= link_to comment.player.name, comment.player %> on <%= comment.created_at.strftime("%B %e, %Y at %I:%M %P") %></span>
+      </p>
+      <%= link_to (image_tag avatar(comment.player)), comment.player %>
+    </div>
+  <% end %>
+  
+  <% if @comments.empty? %>No Comments!<% end %>
+
+  <%= render "comments/form" %>
+
+  <% content_for :admin_sidebar do %>
+    <%= link_to 'Edit Game Info', edit_game_path(@game) %>
+    <%= link_to 'Edit Rank', rank_path(@game) %>
+  <% end %>
+
+</div>

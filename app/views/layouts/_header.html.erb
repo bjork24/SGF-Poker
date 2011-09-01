@@ -1,0 +1,12 @@
+<div id="header">
+  <h1 class="sprite"><%= link_to "SGF POKER", games_path %></h1>
+  <ul class="clearfix">
+    <li id="last-game-winner"><strong>Last game's winner:</strong> <%= last_win().name %></li>
+    <li id="new-game"><a href="<%= new_game_path %>"><span>New Game</span></a></li>
+    <li id="players"><a href="<%= players_path %>"><span>Players</span></a></li>
+    <li id="standings"><a href="<%= standings_path %>"><span>Standings</span></a></li>
+    <li id="profile"><a href="<%= player_path(current_player) %>"><span>Profile</span></a></li>
+    <li id="locations"><a href="<%= locations_path %>"><span>Locations</span></a></li>
+    <li id="logout"><a href="<%= signout_path %>"><span>Logout</span></a></li>
+  </ul>
+</div>

@@ -1,0 +1,49 @@
+<%= form_for(@player) do |f| %>
+
+  <% if @player.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@player.errors.count, "error") %> prohibited this player from being saved:</h2>
+
+      <ul>
+      <% @player.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field clearfix">
+    <%= f.label :name %>
+    <span class="input"><%= f.text_field :name %></span>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :twitter %>
+    <span class="input"><%= f.text_field :twitter %></span>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :avatar %>
+    <span class="input"><%= f.text_field :avatar %></span>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :admin %>
+    <span class="input"><%= f.check_box :admin %></span>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :active %>
+    <span class="input"><%= f.check_box :active %></span>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :provider %>
+    <span class="input"><%= f.text_field :provider %></span>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :uid %>
+    <span class="input"><%= f.text_field :uid %></span>
+  </div>
+  
+  <div class="form-actions">
+    <%= f.submit "Save Player", { :class => "submit-button" } %>
+    <%= link_to "Cancel", players_path, :class => "cancel-button" %>
+  </div>
+  
+<% end %>
